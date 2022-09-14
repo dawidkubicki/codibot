@@ -1,0 +1,2 @@
+# codibot
+Binance Trading Bot
