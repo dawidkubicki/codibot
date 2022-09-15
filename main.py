@@ -5,6 +5,7 @@ from bots.ta_bots.ema_crossover import EMACrossoverBOT
 from bots.grid.spot_grid import StaticGridBot
 from config.title import TITLE
 from config.intervals import INTERVALS
+import os
 
 units = 0.001
 position = 0
@@ -23,26 +24,38 @@ if __name__ == "__main__":
     keepWorking = True
     while keepWorking:
         print(TITLE)
+        try:
+            bot_type = int(input("Choose BOT type: \n\n Grid Bot ---> 1\n TA Bot ---> 2\n\n Exit program ---> 3\n\nDecision: "))
 
-        bot_type = int(input("Choose BOT type: \n\n Grid Bot ---> 1\n TA Bot ---> 2\n\nDecision: "))
-
-        bot = EMACrossoverBOT(
-            key=keys.testnet_api_key,
-            secret=keys.testnet_secret_key,
-            use_testnet=True,
-            base_symbol="btc",
-            quote_symbol="usdt",
-            bar_length=INTERVALS["ONE_MINUTE"],
-            strategy_type="triple_ema",
-            units=units,
-            atr_stop_loss=False,
-            trailing_stop_loss=True,
-            fixed_stop_loss=False,
-            atr_stop_loss_own_smoothing=False,
-            stop_loss=1.05,
-            take_profit=1.000000001
-        )
-        bot.start_trading(historical_days=14)
+            if bot_type == 1:
+                pass
+            elif bot_type == 2:
+                bot = EMACrossoverBOT(
+                    key=keys.testnet_api_key,
+                    secret=keys.testnet_secret_key,
+                    use_testnet=True,
+                    base_symbol="btc",
+                    quote_symbol="usdt",
+                    bar_length=INTERVALS["ONE_MINUTE"],
+                    strategy_type="triple_ema",
+                    units=units,
+                    atr_stop_loss=False,
+                    trailing_stop_loss=True,
+                    fixed_stop_loss=False,
+                    atr_stop_loss_own_smoothing=False,
+                    stop_loss=1.05,
+                    take_profit=1.000000001
+                )
+                bot.start_trading(historical_days=14)
+            elif bot_type == 3:
+                keepWorking = False
+            else:
+                print("\n\nWrong command choosen! \n\nPress enter to come back to menu...")
+                key = str(input(""))
+                os.system('clear')
+        except Exception as e:
+            os.system('clear')
+            print("Not a integer keystroke chosen!")
 
 
 #
