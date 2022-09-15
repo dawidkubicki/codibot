@@ -1,23 +1,13 @@
 import keys.keys as keys
 from time_operators.time_operator import TimeOperator
+from bots.ta_bots.ema_crossover import EMACrossoverBOT
 # from bots.bot import Bot
 from bots.grid.spot_grid import StaticGridBot
 from config.title import TITLE
 from config.intervals import INTERVALS
 
-
-symbol = "BTCUSDT"
-ma_s = 20
-ma_m = 30
-ma_l = 60
-ma_signal = 40
-ma = 19
-rsi_threshold_buy = 30
-rsi_threshold_sell = 80
-window = 200
 units = 0.001
 position = 0
-# exit_rules = 0.99999999
 tc = -0.00085
 
 time = TimeOperator()
@@ -30,7 +20,27 @@ period_cagr = "month"
 fee = 0.1
 
 if __name__ == "__main__":
-    print(TITLE)
+    keepWorking = True
+    while keepWorking:
+        print(TITLE)
+        bot = EMACrossoverBOT(
+            key=keys.testnet_api_key,
+            secret=keys.testnet_secret_key,
+            use_testnet=True,
+            base_symbol="btc",
+            quote_symbol="usdt",
+            bar_length=INTERVALS["ONE_MINUTE"],
+            strategy_type="triple_ema",
+            units=units,
+            atr_stop_loss=False,
+            trailing_stop_loss=True,
+            fixed_stop_loss=False,
+            atr_stop_loss_own_smoothing=False,
+            stop_loss=1.05,
+            take_profit=1.000000001
+        )
+        bot.start_trading(historical_days=14)
+
 
 #
 # bot = StaticGridBot(key=keys.testnet_api_key,
