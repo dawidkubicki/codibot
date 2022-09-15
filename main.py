@@ -23,6 +23,9 @@ if __name__ == "__main__":
     keepWorking = True
     while keepWorking:
         print(TITLE)
+
+        bot_type = int(input("Choose BOT type: \n\n Grid Bot ---> 1\n TA Bot ---> 2\n\nDecision: "))
+
         bot = EMACrossoverBOT(
             key=keys.testnet_api_key,
             secret=keys.testnet_secret_key,
